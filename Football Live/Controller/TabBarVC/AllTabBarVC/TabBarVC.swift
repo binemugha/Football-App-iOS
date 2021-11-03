@@ -30,7 +30,7 @@ class TabBarVC: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let items = tabBar.items else { return }
-        items[0].title = "Today"
+        items[0].title = "Today's Fixtures"
         items[1].title = "Favorites"
     }
 }

@@ -14,6 +14,8 @@ class MatchOverviewCell: UITableViewCell {
     var awayTeamId: Int?
     var homeTeamId: Int?
     
+   
+    
     var competitionNameLabel = UILabel()
     
     var scoreLabel = UILabel()
@@ -23,13 +25,15 @@ class MatchOverviewCell: UITableViewCell {
     
     var parentViewControllerDelegate: UIViewController!
     
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         let screenWidth = UIScreen.main.bounds.width
+       
+        contentView.frame.size = CGSize(width: screenWidth, height: 100)
         
-        contentView.frame.size = CGSize(width: screenWidth, height: 200)
-        contentView.backgroundColor = .white
         
         contentView.addSubview(competitionNameLabel)
         
@@ -37,23 +41,23 @@ class MatchOverviewCell: UITableViewCell {
         competitionNameLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 12)
         competitionNameLabel.textColor = .lightGray
         competitionNameLabel.textAlignment = .center
-        competitionNameLabel.backgroundColor = .white
+        //competitionNameLabel.backgroundColor = .white
         
         contentView.addSubview(scoreLabel)
-        scoreLabel.frame.size = CGSize(width: 170, height: 70)
+        scoreLabel.frame.size = CGSize(width: 170, height: 40)
         scoreLabel.textAlignment = .center
-        scoreLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 74)
+        scoreLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 24)
         scoreLabel.center.x = contentView.center.x
         scoreLabel.center.y = contentView.center.y
-        scoreLabel.backgroundColor = .white
+        //scoreLabel.backgroundColor = .white
         
         let teamNameLabelsHeight: CGFloat = 40
         let teamNameLabelsFont = UIFont(name: "HelveticaNeue-Medium", size: 12)
-        let teamNameLabelsTextColor: UIColor = .lightGray
+        //let teamNameLabelsTextColor: UIColor = .black
         
         contentView.addSubview(homeTeamNameLabel)
-        homeTeamNameLabel.backgroundColor = .white
-        homeTeamNameLabel.textColor = teamNameLabelsTextColor
+        //homeTeamNameLabel.backgroundColor = .white
+        //homeTeamNameLabel.textColor = teamNameLabelsTextColor
         homeTeamNameLabel.font = teamNameLabelsFont
         homeTeamNameLabel.frame.size = CGSize(width: screenWidth / 2, height: teamNameLabelsHeight)
         homeTeamNameLabel.center.y += contentView.frame.height - teamNameLabelsHeight
@@ -64,8 +68,8 @@ class MatchOverviewCell: UITableViewCell {
         homeTeamNameLabel.isUserInteractionEnabled = true
         
         contentView.addSubview(awayTeamNameLabel)
-        awayTeamNameLabel.backgroundColor = .white
-        awayTeamNameLabel.textColor = teamNameLabelsTextColor
+        //awayTeamNameLabel.backgroundColor = .white
+        //awayTeamNameLabel.textColor = teamNameLabelsTextColor
         awayTeamNameLabel.font = teamNameLabelsFont
         awayTeamNameLabel.frame.size = CGSize(width: screenWidth / 2, height: teamNameLabelsHeight)
         awayTeamNameLabel.center.x += contentView.frame.size.width / 2
@@ -81,8 +85,8 @@ class MatchOverviewCell: UITableViewCell {
         let statusLabelOffset = 20
         
         contentView.addSubview(statusLabel)
-        statusLabel.backgroundColor = .white
-        statusLabel.frame = CGRect(x: statusLabelOffset, y: 0, width: Int(screenWidth / CGFloat(4)), height:  statusLabelHeight)
+        //statusLabel.backgroundColor = .white
+        statusLabel.frame = CGRect(x: statusLabelOffset, y: Int(contentView.center.y - 25), width: Int(screenWidth / CGFloat(4)), height:  statusLabelHeight)
         statusLabel.textAlignment = .left
         statusLabel.textColor = .lightGray
         statusLabel.font = statusLabelFont

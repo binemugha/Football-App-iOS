@@ -10,24 +10,22 @@ import XCTest
 
 class Football_LiveTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testGetTeamDescriptionRequestCorrectUrl() {
+        let request = NetworkManager.shared.getTeamDescriptionRequest(1)
+        XCTAssertEqual(request.url, URL(string: "https://api.football-data.org/v2/teams/1"))
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testGetTeamsFromAreaRequestCorrecttUrl() {
+        let request = NetworkManager.shared.getTeamsFromAreaRequest(.Europe)
+        XCTAssertEqual(request.url, URL(string: "https://api.football-data.org/v2/teams?areas=2077"))
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
+    
+    func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }
+
 
 }

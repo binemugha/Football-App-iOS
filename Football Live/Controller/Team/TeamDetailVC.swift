@@ -9,6 +9,8 @@ import UIKit
 
 class TeamDetailVC: UIViewController {
     
+    let activityView = UIActivityIndicatorView(style: .large)
+    
     var teamId: Int!
     var teamName: String!
     
@@ -29,14 +31,22 @@ class TeamDetailVC: UIViewController {
         self.teamId = nil
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        activityView.center = view.center
+        activityView.hidesWhenStopped = true
         self.navigationItem.title = teamName
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Date", style: .plain, target: self, action: #selector(chooseDate))
         
         setUpTableView()
         loadMatchesOverviewAndUpdateTableView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.addSubview(activityView)
     }
     
     private func setUpTableView() {
@@ -55,6 +65,7 @@ class TeamDetailVC: UIViewController {
     }
     
     func loadMatchesOverviewAndUpdateTableView() {
+        self.activityView.startAnimating()
         let groupLoadMatches = DispatchGroup()
         groupLoadMatches.enter()
         let formatter = DateFormatter()
@@ -66,13 +77,14 @@ class TeamDetailVC: UIViewController {
                     self.matches = matches
                     groupLoadMatches.leave()
                 } else {
-                    // smth goes wrong
+                    print("Something went wrong")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
         groupLoadMatches.notify(queue: DispatchQueue.main) {
+            self.activityView.stopAnimating()
             self.tableView.reloadData()
         }
     }
@@ -138,8 +150,11 @@ extension TeamDetailVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return indexPath.row == 0 ? 44.0 : 200.0
+        if indexPath.row == 0{
+            return 0
+        }else{
+            return 100
+        }
     }
 }
 

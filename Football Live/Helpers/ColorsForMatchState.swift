@@ -23,7 +23,7 @@ extension UIColor {
         case "IN_PLAY":
             return .matchInPlay
         default:
-            return .black
+            return .systemTeal
         }
     }
 }

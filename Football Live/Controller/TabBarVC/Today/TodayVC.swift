@@ -10,6 +10,7 @@ import UIKit
 class TodayVC: UIViewController {
     
     var tableView: UITableView!
+    let activityView = UIActivityIndicatorView(style: .large)
     
     var matches = [ModelMatch]()
     
@@ -26,6 +27,9 @@ class TodayVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        activityView.center = view.center
+        activityView.hidesWhenStopped = true
+        
         view.backgroundColor = .green
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -33,7 +37,14 @@ class TodayVC: UIViewController {
         loadMatchesOverviewAndUpdateTableView()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        view.addSubview(activityView)
+    }
+    
     private func loadMatchesOverviewAndUpdateTableView() {
+        self.activityView.startAnimating()
         let groupLoadMatches = DispatchGroup()
         groupLoadMatches.enter()
         NetworkManager.shared.getTodayMatches { (result) in
@@ -46,6 +57,7 @@ class TodayVC: UIViewController {
             }
         }
         groupLoadMatches.notify(queue: DispatchQueue.main) {
+            self.activityView.stopAnimating()
             self.tableView.reloadData()
         }
     }
@@ -63,7 +75,7 @@ class TodayVC: UIViewController {
         tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        //tableView.backgroundColor = .black //Here
+        
     }
 }
 
@@ -112,7 +124,7 @@ extension TodayVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 100
     }
 }
 

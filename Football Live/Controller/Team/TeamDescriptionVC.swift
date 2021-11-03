@@ -9,6 +9,7 @@ import UIKit
 import SafariServices
 
 class TeamDescriptionVC: UIViewController {
+    let activityView = UIActivityIndicatorView(style: .large)
     
     var teamId: Int!
     var teamName: String!
@@ -34,16 +35,22 @@ class TeamDescriptionVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        //view.backgroundColor = .white
         
         setupUI()
         loadTeamDescriptionAndUpdateInfo()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.addSubview(activityView)
+    }
     
     private func setupUI() {
         
         view.addSubview(teamNameLabel)
+        activityView.center = view.center
+        activityView.hidesWhenStopped = true
         
         teamNameLabel.translatesAutoresizingMaskIntoConstraints = false
         teamNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -53,8 +60,8 @@ class TeamDescriptionVC: UIViewController {
         
         teamNameLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
         teamNameLabel.textAlignment = .center
-        teamNameLabel.backgroundColor = .white
-        teamNameLabel.textColor = .black
+        teamNameLabel.backgroundColor = .black
+        //teamNameLabel.textColor = .black
         teamNameLabel.text = teamName!
         
         
@@ -75,9 +82,11 @@ class TeamDescriptionVC: UIViewController {
     }
     
     private func loadTeamDescriptionAndUpdateInfo() {
+        self.activityView.startAnimating()
         let groupLoadTeamDescriprion = DispatchGroup()
         groupLoadTeamDescriprion.enter()
         NetworkManager.shared.getTeamDescription(teamId: teamId!) { (result) in
+            
             switch result {
             case .success(let response):
                 self.team = response
@@ -96,7 +105,9 @@ class TeamDescriptionVC: UIViewController {
                 teamCoaches.sort()
                 teamPlayers.sort()
                 var teamLastUpdated = [String]()
-                teamLastUpdated.append(self.team.lastUpdated!)
+                let formattingStringDate = ""
+                let formattedDate = TimeUtils.getFormattedDate(string: formattingStringDate, formatter: self.team.lastUpdated!)
+                teamLastUpdated.append(formattedDate)
                 
                 self.teamInfo.append(teamCoaches)
                 self.teamInfo.append(teamPlayers)
@@ -109,6 +120,7 @@ class TeamDescriptionVC: UIViewController {
             }
         }
         groupLoadTeamDescriprion.notify(queue: DispatchQueue.main) {
+            self.activityView.stopAnimating()
             self.updateInfo()
         }
     }
@@ -131,7 +143,7 @@ extension TeamDescriptionVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
         let headerView = UIView()
-        headerView.backgroundColor = .white
+        headerView.backgroundColor = .black
 
         let sectionLabel = UILabel(frame: CGRect(x: 8,
                                                  y: 0,

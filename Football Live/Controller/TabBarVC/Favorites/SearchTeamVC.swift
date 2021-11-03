@@ -19,6 +19,8 @@ class SearchTeamVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    let activityView = UIActivityIndicatorView(style: .large)
+    
     var searchBar = UISearchBar()
     var tableView = UITableView()
     
@@ -35,15 +37,21 @@ class SearchTeamVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        activityView.center = view.center
+        activityView.hidesWhenStopped = true
         
         loadAllTeams()
         setupSearchBar()
         setupTableView()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.addSubview(activityView)
+    }
+    
     func loadAllTeams() {
-//        let areas: [Area] = [.Europe, .Africa, .NorthAndCentralAmerica, .SouthAmerica, .Asia]
-//        Загружаю только .Europe, потому что бесплатный API ставит лимит на 6 запросов в минуту
+        self.activityView.startAnimating()
         let groupLoadTeams = DispatchGroup()
         groupLoadTeams.enter()
         NetworkManager.shared.getTeamsFromArea(area: .Europe) { (result) in
@@ -52,6 +60,7 @@ class SearchTeamVC: UIViewController {
                 if let teams = response.teams {
                     for team in teams {
                         self.allTeams.append(team)
+                        print("Number of teams are ", self.allTeams.count)
                     }
                     groupLoadTeams.leave()
                 }
@@ -64,6 +73,7 @@ class SearchTeamVC: UIViewController {
                 return team1.name! < team2.name!
             }
             self.filterTeams()
+            self.activityView.stopAnimating()
             self.tableView.reloadData()
         }
     }
