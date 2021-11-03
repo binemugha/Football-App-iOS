@@ -20,12 +20,18 @@ class Football_LiveTests: XCTestCase {
         XCTAssertEqual(request.url, URL(string: "https://api.football-data.org/v2/teams?areas=2077"))
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testSpellingChecks(){
+        let navTitle = FavoritesVC().navigationItem.title
+        XCTAssertEqual(navTitle, "Favorites")
+        
     }
+    
+//    func testPerformanceExample() {
+//        // This is an example of a performance test case.
+//        measure {
+//            // Put the code you want to measure the time of here.
+//        }
+//    }
 
 
 }

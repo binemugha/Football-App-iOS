@@ -60,8 +60,9 @@ class SearchTeamVC: UIViewController {
                 if let teams = response.teams {
                     for team in teams {
                         self.allTeams.append(team)
-                        print("Number of teams are ", self.allTeams.count)
+                        
                     }
+                    print("Number of teams are ", self.allTeams.count)
                     groupLoadTeams.leave()
                 }
             case .failure(let error):
