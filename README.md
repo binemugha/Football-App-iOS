@@ -1,5 +1,5 @@
 # Football Live - The Football-Data Api
-An iOS app that gets football information from the Football-data api
+An iOS app that gets football information from the Football-data api (https://www.football-data.org)
 
 ## How to Use 
 
