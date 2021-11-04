@@ -34,7 +34,7 @@ CMD + R
 
 ![Video Walkthrough](today.gif)
 
-![Video Walkthrough](MovieDetails.gif)
+![Video Walkthrough](favorite.gif)
 
 
 ## Helpers
