@@ -32,7 +32,7 @@ CMD + R
 
 ## Walkthrough
 
-![Video Walkthrough](TopRatedSearch.gif)
+![Video Walkthrough](today.gif)
 
 ![Video Walkthrough](MovieDetails.gif)
 
